@@ -1,4 +1,4 @@
-module github.com/projectdiscovery/sqlc-go-builder
+module github.com/jdk2588/sqlc-go-builder
 
 go 1.20
 
