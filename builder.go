@@ -85,6 +85,17 @@ func (b *Builder) In(column string, args ...interface{}) *Builder {
 	return b.whereWithPlaceholders(query, args, placeholders)
 }
 
+// Perform tuple based comparision like ("a", "b") > (@value_of_a, @value_of_b)
+func (b *Builder) WhereCompare(column string, operator string, args ...interface{}) *Builder {
+	placeholders := make([]string, len(args))
+	for i := range args {
+		placeholders[i] = "?"
+	}
+
+	query := fmt.Sprintf("%s %s %s", column, operator, strings.Join(placeholders, ","))
+	return b.whereWithPlaceholders(query, args, placeholders)
+}
+
 // Order sets columns of ORDER BY in SELECT.
 // Order("name, age DESC")
 func (b *Builder) Order(cols string) *Builder {
